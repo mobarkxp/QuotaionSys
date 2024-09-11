@@ -1,0 +1,28 @@
+﻿<div class="card  bg-soft-success border-0">
+    <div class="card-body">
+        <div class="d-flex justify-content-between p-md-1">
+            <div class="d-flex flex-row ">
+                <div class="align-self-center ms-2">
+                    <i class="oi @icon fs-1 text-primary" aria-hidden="true"></i>
+                </div>
+
+                <div>
+                    <h4 class="card-title">@title</h4>
+                    <small class="mb-0">خلال شهر</small>
+                </div>
+            </div>
+            <div class="align-self-center">
+                <h2 class="h1 mb-0">@number</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string? title { get; set; }
+    [Parameter]
+    public string? icon { get; set; }
+    [Parameter]
+    public int? number { get; set; }
+}

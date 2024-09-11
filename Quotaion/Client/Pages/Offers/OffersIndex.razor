@@ -1,0 +1,77 @@
+﻿@page "/OffersIndex"
+<div class="card  border-0 ">
+    <div class="card-body d-flex justify-content-between">
+        <h6 class="text-muted">العروض</h6>
+        <RadzenButton Text="عرض جديد" class="btn-primary" Click="OnAddClick"></RadzenButton>
+    </div>
+</div>
+@if (!_isloaded)
+{
+    <div class="row align-content-center justify-content-center">
+        <RadzenProgressBarCircular ShowValue="true" Mode="ProgressBarMode.Indeterminate" Size="ProgressBarCircularSize.Large">
+            <Template>انتظار</Template>
+        </RadzenProgressBarCircular>
+    </div>
+}
+else
+{
+    if (offerNumbers.Count <= 0)
+    {
+          <RadzenCard Variant="Variant.Flat" class="mt-3">
+            <p class="text-center text-muted">لا توجد عروض  حالياً</p>
+          </RadzenCard>
+       
+    }
+    else
+    {
+        <RadzenCard Variant="Variant.Flat" class="mt-3">
+            <div class="d-flex gap-1">
+
+                <p class="text-muted"> كل العروض</p>
+                <div class="col-4">
+                    <input type="text" class="form-control rounded-3" placeholder="رقم العرض - اسم العميل " />
+
+                </div>
+                    <RadzenButton class="btn-primary" Icon="search" ButtonStyle="ButtonStyle.Primary" />
+
+              
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-12">
+                    <table class="table table-hover table-striped table-responsive">
+                        <thead class="bg-primary">
+
+                            <tr>
+                                <td>الرقم</td>
+                                <td>العميل</td>
+                                <td>المبلغ</td>
+                                <td>التاريخ</td>
+                                <td>المستخدم</td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var ofernum in offerNumbers)
+                            {
+                                <tr>
+                                    <td>@ofernum.Id</td>
+                                    <td>@ofernum.Customer_id</td>
+                                    <td>@ofernum.PeroudTime</td>
+                                    <td>@ofernum.Date</td>
+                                    <td>@ofernum.UserAdded</td>
+                                    <td>
+                                        <a class="btn btn-sm btn-primary" href="#"><i class="oi oi-pencil"></i></a>
+                                        <a class="btn btn-sm btn-primary" href="#"><i class="oi oi-eye"></i></a>
+                                        <a class="btn btn-sm btn-danger" href="#"><i class="oi oi-trash bg-danger"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </RadzenCard>
+
+    }
+}

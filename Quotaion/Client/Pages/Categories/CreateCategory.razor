@@ -1,0 +1,46 @@
+﻿@page "/CreateCategory"
+<div class="card  border-0 ">
+    <div class="card-body">
+        <RadzenBreadCrumb>
+
+            <RadzenBreadCrumbItem Path="/IndexCategory" Text="التصنيفات" />
+            <RadzenBreadCrumbItem Icon="add" Text="اضافة صنف" />
+        </RadzenBreadCrumb>
+
+    </div>
+</div>
+
+
+<div class="row mt-3">
+    <div class="card ">
+        <div class="card-body">
+            <EditForm Model="@category" OnValidSubmit="SaveNew">
+                <DataAnnotationsValidator />
+                <ValidationSummary></ValidationSummary>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12">
+                        <label> اسم الصنف</label>
+                        <InputText @bind-Value="category.Name" class="form-control"></InputText>
+                       
+
+                    </div>
+                  
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label>الوصف</label>
+                        <InputTextArea rows="4" @bind-Value="category.Description" class="form-control"></InputTextArea>
+                    </div>
+                </div>
+                <div class="row mt-2 justify-content-lg-end gap-1">
+                    <div class="col-lg-2 col-sm-6">
+                        <input type="submit" value="حفظ" class="btn btn-primary form-control" />
+                    </div>
+                    <div class="col-lg-2 col-sm-6">
+                        <a href="CustomerIndex" class="btn btn-primary w-100">رجوع</a>
+                    </div>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>

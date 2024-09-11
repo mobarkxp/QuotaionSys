@@ -1,0 +1,113 @@
+﻿@page "/"
+@inject NotificationService NotificationService
+@inject IRepositoryInterface<Customer> _CustomerService
+@inject IRepositoryInterface<LogClass> _LogClassService
+@inject IRepositoryInterface<Product> _productService
+
+@if (!isloading)
+{
+    <div class="row align-content-center justify-content-center">
+        <RadzenProgressBarCircular ShowValue="true" Mode="ProgressBarMode.Indeterminate" Size="ProgressBarCircularSize.Large">
+            <Template>انتظار</Template>
+        </RadzenProgressBarCircular>
+    </div>
+}
+else
+{
+    <div class="card  border-0 ">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <h6 class="text-muted">الرئيسية</h6>
+                <div class="col-2">
+                    <select class="form-select col-2">
+                        <option>هذا الشهر</option>
+                        <option>هذا الاسبوع</option>
+                        <option>هذا اليوم</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-lg-3 col-sm-12 mt-sm-2">
+                    <HomeCards number="0" title="عدد العروض" icon="oi-document"></HomeCards>
+                </div>
+                <div class="col-lg-3 col-sm-12 mt-sm-2">
+                    <HomeCards number="@_products.Count" title="عدد المنتجات" icon="oi-list-rich"></HomeCards>
+                </div>
+                <div class="col-lg-3 col-sm-12 mt-sm-2">
+                    <HomeCards number="@customers.Count" title="عدد العملاء" icon="oi-person"></HomeCards>
+                </div>
+                <div class="col-lg-3 col-sm-12 mt-sm-2">
+                    <HomeCards number="0" title="عدد قطع الغيار" icon="oi oi-layers"></HomeCards>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row pb-3 mt-2">
+        <div class="col-lg-8 col-sm-12">
+        </div>
+        <div class="col-lg-4 col-sm-12 ">
+
+            <div class="card  ">
+                <div class="card-header d-flex justify-content-between">
+                    <p>سجل الحركة</p>
+                    <RadzenButton Click=@(args => OnClick("تم التحديث")) Icon="refresh" ButtonStyle="ButtonStyle.Base" />
+
+                </div>
+                <div class="card-body scroll">
+                    @if (_logClasses.Count == 0)
+                    {
+                        <p class="text-center text-muted">لا توجد حركة في النظام</p>
+                    }
+                    else
+                    {
+                        <RadzenTimeline>
+                            <Items>
+                                @foreach (var logitem in _logClasses)
+                                {
+                                    <RadzenTimelineItem PointVariant="Variant.Outlined" PointStyle="PointStyle.Primary">
+                                        <LabelContent>
+                                            <RadzenText TextStyle="TextStyle.Subtitle2" class="rz-m-0">@logitem.Date</RadzenText>
+                                        </LabelContent>
+                                        <PointContent><RadzenIcon Icon="app_registration" /></PointContent>
+
+                                        <ChildContent>
+                                            @logitem.Description
+                                        </ChildContent>
+                                    </RadzenTimelineItem>
+                                }
+
+
+
+                            </Items>
+                        </RadzenTimeline>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+
+    public List<Customer> customers { get; set; } = new();
+    public List<LogClass> _logClasses { get; set; } = new();
+    public List<Product> _products { get; set; } = new();
+    private bool isloading = false;
+    protected override async Task OnInitializedAsync()
+    {
+
+        await base.OnInitializedAsync();
+        customers = await _CustomerService.GetAll("api/Customers/GetAll");
+        _logClasses = await _LogClassService.GetAll("api/LogClasss/GetAll");
+        _products = await _productService.GetAll("api/Products/GetAll");
+        isloading = true;
+    }
+    private void OnClick(string text)
+    {
+       
+        NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = " تحديث", Detail = text });
+    }
+}

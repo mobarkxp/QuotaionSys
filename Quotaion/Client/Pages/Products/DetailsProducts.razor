@@ -1,0 +1,115 @@
+﻿@page "/DetailsProducts/{Id:int}"
+<div class="card  border-0 ">
+    <div class="card-body">
+        <RadzenBreadCrumb>
+
+            <RadzenBreadCrumbItem Path="/ProductsIndex" Text="المنتجات " />
+            <RadzenBreadCrumbItem Text=@product.Name />
+        </RadzenBreadCrumb>
+
+    </div>
+</div>
+<section class="mt-2">
+
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <img src="ProductsImg/@product.Img" alt="avatar"
+                         class=" img-fluid" style="width: 100px;">
+                    <h5 class="mt-1">@product.Name</h5>
+                    <p class="text-muted mb-1">@product.Code</p>
+                    <div class="d-flex justify-content-center mb-2 gap-1">
+                        <a class="btn btn-primary" href="EditProduts/@product.Id">تعديل</a>
+                        <RadzenButton ButtonStyle="ButtonStyle.Danger" Click="()=>OnRemoveClick(product.Id)" Text=" حذف"></RadzenButton>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-4 mb-lg-0">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p class="mb-0">عدد العروض </p>
+                        </div>
+                        <div class="col-sm-9 ">
+                            <p class="text-muted  bg-light p-2">10</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p class="mb-0 "> المتسخدم</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted  bg-light p-2">مبارك</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p class="mb-0 "> تاريخ الاضافة </p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted bg-light p-2">
+                                @product.Date.ToShortDateString()
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p class="mb-0"> اسم المنتج</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted  bg-light p-2">@product.Name</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p class="mb-0">السعر</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted  bg-light p-2">@product.NormalPrice</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p class="mb-0">البراند</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted  bg-light p-2">@product.CompanyName</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p class="mb-0"> الكود</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted  bg-light p-2">@product.Code</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p class="mb-0">المواصفات</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0 bg-light p-2">@product.Description</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+         
+        </div>
+    </div>
+
+</section>
+
+
+

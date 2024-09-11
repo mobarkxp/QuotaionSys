@@ -1,0 +1,68 @@
+﻿@page "/AddProduct"
+<div class="card  border-0 ">
+    <div class="card-body">
+        <RadzenBreadCrumb>
+            <RadzenBreadCrumbItem Path="/ProductsIndex" Text="المنتجات" />
+            <RadzenBreadCrumbItem Icon="add" Text="اضافة منتج" />
+        </RadzenBreadCrumb>
+
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="card ">
+        <div class="card-body">
+            <EditForm Model="@productDto" OnValidSubmit="SaveNewAsync">
+                <DataAnnotationsValidator />
+                <ValidationSummary></ValidationSummary>
+                <div class="row">
+                    <div class="col-lg-4 col-sm-12">
+                        <label> اسم المنتج</label>
+                        <InputText @bind-Value="productDto.Name" class="form-control"></InputText>
+                        <label> اسم الشركة</label>
+                        <InputText @bind-Value="productDto.CompanyName" class="form-control"></InputText>
+
+                    </div>
+                    <div class="col-lg-4 col-sm-12">
+                        <label> السعر بدون الضريبة </label>
+                        <RadzenNumeric class="form-control" Min="1" @bind-Value=@productDto.NormalPrice  InputAttributes="@(new Dictionary<string,object>(){ { "aria-label", "enter value" }})" />
+                        <label> الباركود</label>
+                        <InputText @bind-Value="productDto.Code" class="form-control"></InputText>
+                    </div>
+                    <div class="col-lg-4 col-sm-12">
+                        <label> التصنيف </label>
+                      <div class="d-flex">
+                            <InputSelect class="form-select text-center" @bind-Value="productDto.Category_id">
+                                <option value="">------- اختر التصنيف ---------</option>
+                                @foreach (var category in categories)
+                                {
+                                    <option value="@category.Id">@category.Name</option>
+                                }
+                            </InputSelect>
+                            <RadzenButton Text="+" class="btn-primary ms-1 me-1" Click="@showAddCatAsync"></RadzenButton>
+                      </div>
+                       
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-8 col-sm-12">
+                        <label>الوصف</label>
+                        <InputTextArea rows="6" @bind-Value="productDto.Description" class="form-control"></InputTextArea>
+                    </div>
+                    <div class="col-lg-4 col-sm-12">
+                        <label>الصورة</label>
+                        <InputFile @bind-Value="productDto.Img" class="form-control" OnChange="@HandleImageUpload"></InputFile>
+                        <img class="mt-2 border-1" src="@imgename" alt="لا توجد صورة" height="150" />
+                    </div>
+                </div>
+                <div class="row mt-2 justify-content-lg-end gap-1">
+                    <div class="col-lg-2 col-sm-6">
+                        <RadzenButton ButtonType="ButtonType.Submit" Icon="save" IsBusy=@busy Text="حفظ" class="btn-primary w-100 ms-1 me-1"></RadzenButton>
+                    </div>
+                    <div class="col-lg-2 col-sm-6">
+                        <a href="ProductsIndex" class="btn btn-primary w-100">رجوع</a>
+                    </div>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
